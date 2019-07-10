@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Introdução Vue Js</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Jogo das frases</h1>
+       <p v-if="homem">Bem vindo</p>
+       <p v-if="!homem">Bem vinda</p>
+    </div>
+
+</body>
+
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            homem : true
+            
+            
+        }
+    })
+</script>
+
+</html>
