@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Cadastro de email</title>
+        <script src ="https://cdn.jsdelivr.net/npm/vue"></script>
+    </head>
+    <body>
+        <h1>Cadastre-se</h1>
+        <div id="app">
+            <input type="text" v-model = "emailInput">
+            <button type="button" @click ="salvar">Salvar</button>
+            <button type="button" @click ="cancelar">Cancelar</button>
+            
+            <div >
+                <ul>
+                    <li v-for = "email, index in emails">{{email}} 
+                        <button @click = "editar(index)">editar</button>
+                        <button @click = "excluir(index)">excluir</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            
+            data: {
+                emailInput:"",
+            
+                emails: []
+            },
+            methods: {
+                salvar(){
+                    this.emails.push(this.emailInput)
+                    this.emailInput = ""
+                },
+           
+                cancelar(){
+
+                },
+            
+                editar(){
+
+                },
+                
+                excluir(){
+
+                },
+            },
+        })
+    </script>
+</html>
