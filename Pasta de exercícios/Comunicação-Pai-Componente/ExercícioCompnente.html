@@ -1,0 +1,125 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Exercício Componente</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+
+    <div id="app">
+        <h2> Carrinho: {{carrinho.length}} Produto(s)</h2>
+        <button type="button" @click="mostrarDetalhes">Detalhes</button>
+        <div v-if="detalhes">
+            <ul>
+                <li v-for="produto, index in carrinho" :key="index">
+
+                    <img :src="produto.imagem" alt="">
+                    {{produto.nome}}
+                    {{produto.valor}}
+                    <button type="button" @click="removerProduto(index)">Remover</button>
+
+
+                </li>
+
+                Total: R$ {{ValorTotal}}
+            </ul>
+        </div>
+
+        <componente-produtos setor="Eletronicos" @evento-produto="AdicionarAoCarrinho"></componente-produtos>
+    </div>
+
+    <script>
+
+        Vue.component("componente-produtos", {
+            props: {
+                setor: { type: String }
+            },
+
+            template: `
+                <div>
+                    <ul>
+                    <li v-for= "produto, index in produtos">
+                        <img :src = "produto.imagem">
+                        {{produto.nome}}
+                        {{produto.valor}}
+                        <button @click="adicionarProduto(index)">Adicionar</button>
+                    
+                    </li>
+                    </ul>
+                
+                </div>
+
+                `,
+
+            data() {
+
+                return {
+
+                    produtos: [
+
+                        { nome: "21 Lições para o século 21", valor: 49 + "," + 90, imagem: "img/21.jpg" },
+                        { nome: "O algoritmo mestre", valor: 79 + "," + 90, imagem: "img/algoritmo.jpg" },
+                        { nome: "O poder do hábito", valor: 59 + "," + 90, imagem: "img/habito.jpg" },
+                        { nome: "starwars", valor: 89 + "," + 90, imagem: "img/starwars.jpg" }
+
+                    ]
+                }
+            },
+
+            methods: {
+
+                adicionarProduto(index) {
+                    this.$emit("evento-produto", this.produtos.splice(index, 1));
+                }
+            }
+
+
+
+        });
+
+        var app = new Vue({
+            el: "#app",
+
+            data: {
+
+                carrinho: [],
+                ValorTotal: 0,
+                detalhes: false
+
+            },
+
+            methods: {
+
+                mostrarDetalhes() {
+                    this.detalhes = !this.detalhes
+                },
+
+                AdicionarAoCarrinho(produto) {
+                    this.carrinho.push(produto[0])
+                    this.calcularValorTotal()
+                },
+
+                removerProduto(index) {
+                    this.carrinho.splice(index, 1)
+                    this.calcularValorTotal()
+                },
+
+                calcularValorTotal() {
+                    this.ValorTotal = 0;
+                    for (let i = 0; i < this.carrinho.length; i++) {
+                        this.ValorTotal += this.carrinho[i].valor;
+                    }
+                }
+
+
+            },
+        })
+
+
+    </script>
+</body>
+
+</html>
